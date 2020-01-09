@@ -3,7 +3,7 @@ const pool = new Pool({
   user: "postgres",
   host: "localhost",
   database: "neighbourhoods",
-  password: "875431Ab!",
+  password: "gloria85",
   port: 5432
 });
 const getHouses = (req, res) => {
@@ -45,21 +45,41 @@ const getPersonByID = (req, res) => {
   });
 };
 
-// const createPerson = (req, res) => {
-//   const name = parseInt(req.params.name);
-//   const age = parseInt(req.params.age);
+const createPerson = (req, res) => {
+  const id = parseInt(req.params.id);
+  const name = req.params.name;
+  const age = parseInt(req.params.age);
 
-//   pool.query(
-//     "INSERT INTO people (name, age) VALUES ($1, $2)",
-//     [name, age],
-//     (error, results) => {
-//       if (error) {
-//         throw error;
-//       }
-//       res.status(200).json(results.rows);
-//     }
-//   );
-// };
+  pool.query(
+    "INSERT INTO people (id, name, age) VALUES ($1, $2, $3)",
+    [id, name, age],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      // res.status(200).send(`User added with ID: ${result.insertId}`);
+      res.status(201).send(`Person added! Please visit /api/v1/people to check!`)
+    }
+  );
+};
+
+const createTest = (req, res) => {
+  const id = parseInt(req.query.id);
+  const name = req.query.name;
+  const age = parseInt(req.query.age);
+
+  pool.query(
+    "INSERT INTO people (id, name, age) VALUES ($1, $2, $3)",
+    [id, name, age],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      // res.status(200).send(`User added with ID: ${result.insertId}`);
+      res.status(201).send(`Test creation worked?! Please visit /api/v1/people to check... results may vary.`)
+    }
+  );
+};
 
 const getAddresses = (req, res) => {
   pool.query("SELECT * FROM addresses", (error, results) => {
@@ -88,5 +108,6 @@ module.exports = {
   getAddressByID,
   getHouseByID,
   getPersonByID,
-  createPerson
+  createPerson,
+  createTest
 };
