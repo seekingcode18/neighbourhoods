@@ -38,12 +38,24 @@ const createHouse = (req, res) => {
         throw error;
       }
       // res.status(200).send(`User added with ID: ${result.insertId}`);
-      res.status(201).send(`House added! Please visit /api/v1/houses to check!`)
+      res.status(201).send(`House added with id of ${id}! Please visit /api/v1/houses to check!`)
     }
   );
 };
 
+const updateHouse = (req, res) => {
+  const id = parseInt(req.query.id)
+  const address_id = parseInt(req.query.address_id)
+  const number_of_occupants = parseInt(req.query.number_of_occupants)
 
+  pool.query("UPDATE houses SET address_id = $2, number_of_occupants = $3 WHERE id = $1", [id, address_id, number_of_occupants], (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(200).send(`House modified with id of ${id}`)
+    }
+  )
+}
 
 const getPeople = (req, res) => {
   pool.query("SELECT * FROM people", (error, results) => {
@@ -78,10 +90,25 @@ const createPerson = (req, res) => {
         throw error;
       }
       // res.status(200).send(`User added with ID: ${result.insertId}`);
-      res.status(201).send(`Person added! Please visit /api/v1/people to check!`)
+      res.status(201).send(`Person added with id of ${id}! Please visit /api/v1/people to check!`)
     }
   );
 };
+
+
+const updatePerson = (req, res) => {
+  const id = parseInt(req.query.id)
+  const name = req.query.name
+  const age = parseInt(req.query.age)
+
+  pool.query("UPDATE people SET name = $2, age = $3 WHERE id = $1", [id, name, age], (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(200).send(`Person modified with id of ${id}`)
+    }
+  )
+}
 
 
 const getAddresses = (req, res) => {
@@ -114,17 +141,35 @@ const createAddress = (req, res) => {
 
   pool.query(
     "INSERT INTO addresses (id, flat_number, street_number, building_name, street_name, postcode) VALUES ($1, $2, $3, $4, $5, $6)",
-    [id, flat_number, street_number, building_name, street_number, postcode],
+    [id, flat_number, street_number, building_name, street_name, postcode],
     (error, results) => {
       if (error) {
         throw error;
       }
       // res.status(200).send(`User added with ID: ${result.insertId}`);
-      res.status(201).send(`Address added! Please visit /api/v1/addresses to check!`)
+      res.status(201).send(`Address modified with id of ${id}! Please visit /api/v1/addresses to check!`)
     }
   );
 };
 
+
+const updateAddress = (req, res) => {
+  const id = parseInt(req.query.id);
+  const flat_number = parseInt(req.query.flat_number);
+  const street_number = parseInt(req.query.street_number);
+  const building_name = req.query.building_name;
+  const street_name = req.query.street_name;
+  const postcode = req.query.postcode;
+
+
+  pool.query("UPDATE addresses SET flat_number = $2, street_number = $3, building_name = $4, street_name = $5, postcode = $6 WHERE id = $1", [id, flat_number, street_number, building_name, street_name, postcode], (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(200).send(`Address modified with id of ${id}`)
+    }
+  )
+}
 
 
 module.exports = {
@@ -136,5 +181,8 @@ module.exports = {
   getPersonByID,
   createPerson,
   createAddress,
-  createHouse
+  createHouse,
+  updateHouse,
+  updatePerson,
+  updateAddress
 };

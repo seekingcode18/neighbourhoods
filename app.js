@@ -13,5 +13,8 @@ app.get("/api/v1/house/:id", db.getHouseByID);
 app.get("/api/v1/createPerson", db.createPerson);
 app.get("/api/v1/createHouse", db.createHouse);
 app.get("/api/v1/createAddress", db.createAddress);
+app.get("/api/v1/updateHouse", db.updateHouse);
+app.get("/api/v1/updatePerson", db.updatePerson);
+app.get("/api/v1/updateAddress", db.updateAddress);
 
 app.listen(port, () => console.log("Listening on 8080"));
