@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 8080;
-const db = require("./queries");
+const db = require("./queries_k");
 
 app.get("/", (req, res) => res.send("Home page!"));
 app.get("/api/v1/houses", db.getHouses);
@@ -16,8 +16,8 @@ app.get("/api/v1/createAddress", db.createAddress);
 app.get("/api/v1/updateHouse", db.updateHouse);
 app.get("/api/v1/updatePerson", db.updatePerson);
 app.get("/api/v1/updateAddress", db.updateAddress);
-// app.get("/api/v1/deleteHouse", db.deleteHouse);
-// app.get("/api/v1/deletePerson", db.deletPerson);
-// app.get("/api/v1/deleteAddress", db.deleteAddress);
+app.get("/api/v1/deleteHouse/:id", db.deleteHouse);
+app.get("/api/v1/deletePerson/:id", db.deletePerson);
+app.get("/api/v1/deleteAddress/:id", db.deleteAddress);
 
 app.listen(port, () => console.log("Listening on 8080"));
