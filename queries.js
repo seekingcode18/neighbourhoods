@@ -25,6 +25,26 @@ const getHouseByID = (req, res) => {
   });
 };
 
+const createHouse = (req, res) => {
+  const id = parseInt(req.query.id);
+  const address_id = parseInt(req.query.address_id);
+  const number_of_occupants = parseInt(req.query.number_of_occupants);
+
+  pool.query(
+    "INSERT INTO houses (id, address_id, number_of_occupants) VALUES ($1, $2, $3)",
+    [id, address_id, number_of_occupants],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      // res.status(200).send(`User added with ID: ${result.insertId}`);
+      res.status(201).send(`House added! Please visit /api/v1/houses to check!`)
+    }
+  );
+};
+
+
+
 const getPeople = (req, res) => {
   pool.query("SELECT * FROM people", (error, results) => {
     if (error) {
@@ -46,9 +66,9 @@ const getPersonByID = (req, res) => {
 };
 
 const createPerson = (req, res) => {
-  const id = parseInt(req.params.id);
-  const name = req.params.name;
-  const age = parseInt(req.params.age);
+  const id = parseInt(req.query.id);
+  const name = req.query.name;
+  const age = parseInt(req.query.age);
 
   pool.query(
     "INSERT INTO people (id, name, age) VALUES ($1, $2, $3)",
@@ -63,23 +83,6 @@ const createPerson = (req, res) => {
   );
 };
 
-const createTest = (req, res) => {
-  const id = parseInt(req.query.id);
-  const name = req.query.name;
-  const age = parseInt(req.query.age);
-
-  pool.query(
-    "INSERT INTO people (id, name, age) VALUES ($1, $2, $3)",
-    [id, name, age],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      // res.status(200).send(`User added with ID: ${result.insertId}`);
-      res.status(201).send(`Test creation worked?! Please visit /api/v1/people to check... results may vary.`)
-    }
-  );
-};
 
 const getAddresses = (req, res) => {
   pool.query("SELECT * FROM addresses", (error, results) => {
@@ -101,6 +104,29 @@ const getAddressByID = (req, res) => {
   });
 };
 
+const createAddress = (req, res) => {
+  const id = parseInt(req.query.id);
+  const flat_number = parseInt(req.query.flat_number);
+  const street_number = parseInt(req.query.street_number);
+  const building_name = req.query.building_name;
+  const street_name = req.query.street_name;
+  const postcode = req.query.postcode;
+
+  pool.query(
+    "INSERT INTO addresses (id, flat_number, street_number, building_name, street_name, postcode) VALUES ($1, $2, $3, $4, $5, $6)",
+    [id, flat_number, street_number, building_name, street_number, postcode],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      // res.status(200).send(`User added with ID: ${result.insertId}`);
+      res.status(201).send(`Address added! Please visit /api/v1/addresses to check!`)
+    }
+  );
+};
+
+
+
 module.exports = {
   getHouses,
   getPeople,
@@ -109,5 +135,6 @@ module.exports = {
   getHouseByID,
   getPersonByID,
   createPerson,
-  createTest
+  createAddress,
+  createHouse
 };

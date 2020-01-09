@@ -10,10 +10,8 @@ app.get("/api/v1/addresses", db.getAddresses);
 app.get("/api/v1/address/:id", db.getAddressByID);
 app.get("/api/v1/person/:id", db.getPersonByID);
 app.get("/api/v1/house/:id", db.getHouseByID);
-app.get("/api/v1/test", (req, res) => {
-  console.log(res)
-  res.send('testing... check console')
-});
-app.get("/api/v1/createPerson/:id/:name/:age", db.createPerson);
+app.get("/api/v1/createPerson", db.createPerson);
+app.get("/api/v1/createHouse", db.createHouse);
+app.get("/api/v1/createAddress", db.createAddress);
 
 app.listen(port, () => console.log("Listening on 8080"));
