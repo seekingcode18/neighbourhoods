@@ -45,6 +45,22 @@ const getPersonByID = (req, res) => {
   });
 };
 
+// const createPerson = (req, res) => {
+//   const name = parseInt(req.params.name);
+//   const age = parseInt(req.params.age);
+
+//   pool.query(
+//     "INSERT INTO people (name, age) VALUES ($1, $2)",
+//     [name, age],
+//     (error, results) => {
+//       if (error) {
+//         throw error;
+//       }
+//       res.status(200).json(results.rows);
+//     }
+//   );
+// };
+
 const getAddresses = (req, res) => {
   pool.query("SELECT * FROM addresses", (error, results) => {
     if (error) {
@@ -71,5 +87,6 @@ module.exports = {
   getAddresses,
   getAddressByID,
   getHouseByID,
-  getPersonByID
+  getPersonByID,
+  createPerson
 };
